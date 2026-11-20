@@ -35,6 +35,10 @@ jobs:
 
       - name: Typecheck
         run: pnpm typecheck
+        env:
+          # 这个 monorepo 的 tsc 项目引用编译峰值超过 Node 默认约 2 GB 堆上限，
+          # 在 instabox-medium（8 GiB）上直接 OOM，需显式放开。
+          NODE_OPTIONS: --max-old-space-size=6144
 
       - name: Lint
         run: pnpm lint
